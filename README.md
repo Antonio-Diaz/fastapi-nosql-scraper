@@ -1,6 +1,4 @@
 # Scrape Websites with Python & NoSQL
-Learn how to scrape websites with Python, Selenium, Requests HTML, Celery, FastAPI, & NoSQL.
-
 
 Here's what each tool is used for:
 
@@ -22,7 +20,6 @@ This series is broken up into 4 parts:
 - **Data models** how to store and validate data with `cassandra-driver`, `pydantic`, and **AstraDB**.
 - **Worker & Scheduling** how to schedule periodic tasks (ie scraping) integrated with Redis & AstraDB
 - **Presentation** How to combine the above steps in as robust web application service
-
 
 
 ## Setup your system.
