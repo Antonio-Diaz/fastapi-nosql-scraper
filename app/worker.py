@@ -1,6 +1,7 @@
 import logging
 
 from celery import Celery
+from celery.schedules import crontab
 from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table
 from celery.signals import beat_init, worker_process_init
@@ -40,15 +41,31 @@ def celery_on_startup(*args, **kwargs):
         logger.info("Synchronizing Cassandra tables.")  # This should definitely print now
         sync_table(Product)
         sync_table(ProductEventScrape)
-        
         logger.info("Cassandra initialization completed.")
     except Exception as e:
         logger.exception(f"An exception occurred: {e}")
+        
 
 beat_init.connect(celery_on_startup)
 worker_process_init.connect(celery_on_startup)
+
+# celery --app app.worker.celery_app worker --beat -s celerybeat-schedule --loglevel INFO
+@celery_app.on_after_configure.connect
+def setup_periodic_task(sender, *args, **kwargs):
+    sender.add_periodic_task(crontab(minute="*/5"), scrape_products.s())
 
 @celery_app.task
 def list_product():
     q = Product.objects().all().values_list("asin", flat=True)
     print(list(q))
+
+@celery_app.task
+def scrape_asin(asin):
+    logger.info(asin)
+
+@celery_app.task
+def scrape_products():
+    logger.info("Doing scraping")
+    q = Product.objects().all().value_list("asin", flat=True)
+    for asin in q:
+        scrape_asin.delay(asin)

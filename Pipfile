@@ -22,6 +22,7 @@ python-dotenv = "*"
 python-slugify = "*"
 jupyter = "*"
 notebook = "*"
+fake-useragent = "*"
 
 [dev-packages]
 
