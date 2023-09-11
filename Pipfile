@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+gunicorn = "*"
+uvicorn = "*"
+pytest = "*"
+pre-commit = "*"
+requests = "*"
+celery = "*"
+aiofiles = "*"
+redis = "*"
+cassandra-driver = "*"
+dateparser = "*"
+pandas = "*"
+requests-html = "*"
+selenium = "*"
+python-dotenv = "*"
+python-slugify = "*"
+jupyter = "*"
+notebook = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
